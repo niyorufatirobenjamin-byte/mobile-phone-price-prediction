@@ -23,7 +23,7 @@ def phone_price_prediction(Brand, Battery_capacity_mAh, Screen_size_inches,
                             three_G, four_G_LTE):
     
     # Create DataFrame from input
-    new_phone = pd.DataFrame([{
+new_phone = pd.DataFrame([{
         'Brand': Brand,
         'Battery capacity (mAh)': Battery_capacity_mAh,
         'Screen size (inches)': Screen_size_inches,
@@ -89,3 +89,4 @@ def phone_price_prediction(Brand, Battery_capacity_mAh, Screen_size_inches,
 if __name__ == '__main__':
 
     main()         
+
