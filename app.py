@@ -12,12 +12,38 @@ import streamlit as st
 
 
 # Load the trained model
-loaded_model = pickle.load(open('C:/Users/Benjamin/Desktop/mobile phone price prediction/phone prediction prices/phone_sales_data.sav', 'rb'))
+loaded_model = pickle.load(open('phone_sales_data.sav', 'rb'))
 
 # Main Streamlit app
 def main():
     st.title("mobile phone Price Prediction")
-
+def phone_price_prediction(Brand, Battery_capacity_mAh, Screen_size_inches,
+                            Touchscreen, Processor, RAM_MB, Internal_storage_GB,
+                            Rear_camera, Operating_system, Number_of_SIMs,
+                            three_G, four_G_LTE):
+    
+    # Create DataFrame from input
+    new_phone = pd.DataFrame([{
+        'Brand': Brand,
+        'Battery capacity (mAh)': Battery_capacity_mAh,
+        'Screen size (inches)': Screen_size_inches,
+        'Touchscreen': Touchscreen,
+        'Processor': Processor,
+        'RAM (MB)': RAM_MB,
+        'Internal storage (GB)': Internal_storage_GB,
+        'Rear camera': Rear_camera,
+        'Operating system': Operating_system,
+        'Number of SIMs': Number_of_SIMs,
+        '3G': three_G,
+        '4G/ LTE': four_G_LTE
+    }])
+    
+    # Predict price
+    predicted_price = loaded_model.predict(new_phone)
+    
+    # Return the prediction
+    return predicted_price[0]
+                                
     # Input fields for all features
     Brand = st.text_input('Brand (numeric code, e.g., 44)')
     Battery_capacity_mAh = st.text_input('Battery capacity (mAh) (e.g., 4085)')
@@ -61,4 +87,5 @@ def main():
             
          st.error("Please enter valid numeric values for all inputs.")
 if __name__ == '__main__':
+
     main()         
