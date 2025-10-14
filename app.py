@@ -14,7 +14,20 @@ def phone_price_prediction(Brand, Battery_capacity_mAh, Screen_size_inches,
                             Rear_camera, Operating_system, Number_of_SIMs,
                             three_G, four_G_LTE):
     # Create DataFrame from input
-   
+   new_phone = pd.DataFrame([{
+    'Brand': 44,
+    'Battery capacity (mAh)': 4085,
+    'Screen size (inches)': 6.67,
+    'Touchscreen': 1,
+    'Processor': 8,
+    'RAM (MB)': 12000,
+    'Internal storage (GB)': 256.0,
+    'Rear camera': 48.0,
+    'Operating system': 0,
+    'Number of SIMs': 2,
+    '3G': 1,
+    '4G/ LTE': 1
+}])
     
     # Predict price
     predicted_price = loaded_model.predict(new_phone)
@@ -70,6 +83,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
 
 
