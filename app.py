@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Sep 25 10:14:20 2025
-@author: Admin
-"""
 
 import numpy as np
 import pickle
@@ -87,3 +83,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
