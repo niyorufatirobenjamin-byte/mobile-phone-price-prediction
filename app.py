@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Sep 25 10:14:20 2025
-
 @author: Admin
 """
 
@@ -10,20 +9,16 @@ import pickle
 import pandas as pd
 import streamlit as st
 
-
 # Load the trained model
 loaded_model = pickle.load(open('phone_sales_data.sav', 'rb'))
 
-# Main Streamlit app
-def main():
-    st.title("mobile phone Price Prediction")
+# Function to make prediction
 def phone_price_prediction(Brand, Battery_capacity_mAh, Screen_size_inches,
                             Touchscreen, Processor, RAM_MB, Internal_storage_GB,
                             Rear_camera, Operating_system, Number_of_SIMs,
                             three_G, four_G_LTE):
-    
     # Create DataFrame from input
-   new_phone = pd.DataFrame([{
+    new_phone = pd.DataFrame([{
         'Brand': Brand,
         'Battery capacity (mAh)': Battery_capacity_mAh,
         'Screen size (inches)': Screen_size_inches,
@@ -40,11 +35,14 @@ def phone_price_prediction(Brand, Battery_capacity_mAh, Screen_size_inches,
     
     # Predict price
     predicted_price = loaded_model.predict(new_phone)
-    
-    # Return the prediction
     return predicted_price[0]
-                                
-    # Input fields for all features
+
+
+# Streamlit app
+def main():
+    st.title("📱 Mobile Phone Price Prediction")
+
+    # Input fields
     Brand = st.text_input('Brand (numeric code, e.g., 44)')
     Battery_capacity_mAh = st.text_input('Battery capacity (mAh) (e.g., 4085)')
     Screen_size_inches = st.text_input('Screen size (inches) (e.g., 6.67)')
@@ -60,35 +58,32 @@ def phone_price_prediction(Brand, Battery_capacity_mAh, Screen_size_inches,
 
     if st.button('Predict phone Price'):
         try:
-        # Convert inputs to numeric types
-         Brand = int(Brand)
-         Battery_capacity_mAh = int(Battery_capacity_mAh)
-         Screen_size_inches = float(Screen_size_inches)
-         Touchscreen = int(Touchscreen)
-         Processor = int(Processor)
-         RAM_MB = int(RAM_MB)
-         Internal_storage_GB = float(Internal_storage_GB)
-         Rear_camera = float(Rear_camera)
-         Operating_system = int(Operating_system)
-         Number_of_SIMs = int(Number_of_SIMs)
-         three_G = int(three_G)
-         four_G_LTE = int(four_G_LTE)
+            # Convert inputs
+            Brand = int(Brand)
+            Battery_capacity_mAh = int(Battery_capacity_mAh)
+            Screen_size_inches = float(Screen_size_inches)
+            Touchscreen = int(Touchscreen)
+            Processor = int(Processor)
+            RAM_MB = int(RAM_MB)
+            Internal_storage_GB = float(Internal_storage_GB)
+            Rear_camera = float(Rear_camera)
+            Operating_system = int(Operating_system)
+            Number_of_SIMs = int(Number_of_SIMs)
+            three_G = int(three_G)
+            four_G_LTE = int(four_G_LTE)
 
-        # Call the prediction function (just fix indentation)
-         price = phone_sales_data(
-            Brand, Battery_capacity_mAh, Screen_size_inches,
-            Touchscreen, Processor, RAM_MB, Internal_storage_GB,
-            Rear_camera, Operating_system, Number_of_SIMs,
-            three_G, four_G_LTE
-        )
+            # Predict
+            price = phone_price_prediction(
+                Brand, Battery_capacity_mAh, Screen_size_inches,
+                Touchscreen, Processor, RAM_MB, Internal_storage_GB,
+                Rear_camera, Operating_system, Number_of_SIMs,
+                three_G, four_G_LTE
+            )
 
-         st.success(f'The predicted price for the switch is: RWF {price:.2f}')
+            st.success(f'The predicted phone price is: RWF {price:.2f}')
         except ValueError:
-            
-         st.error("Please enter valid numeric values for all inputs.")
+            st.error("Please enter valid numeric values for all inputs.")
+
+
 if __name__ == '__main__':
-
-    main()         
-
-
-
+    main()
