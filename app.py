@@ -1,44 +1,50 @@
 # -*- coding: utf-8 -*-
+"""
+Created on Thu Sep 25 10:14:20 2025
 
-import numpy as np
+@author: Admin
+"""
+
 import pickle
 import pandas as pd
+import numpy as np
 import streamlit as st
 
-# Load the trained model
-loaded_model = pickle.load(open('phone_sales_data.sav', 'rb'))
 
-# Function to make prediction
+# Load the trained model
+loaded_model = pickle.load(open('C:/Users/Benjamin/Desktop/mobile phone price prediction/phone_sales_data.sav', 'rb'))
+
 def phone_price_prediction(Brand, Battery_capacity_mAh, Screen_size_inches,
                             Touchscreen, Processor, RAM_MB, Internal_storage_GB,
                             Rear_camera, Operating_system, Number_of_SIMs,
                             three_G, four_G_LTE):
+     
     # Create DataFrame from input
-   new_phone = pd.DataFrame([{
-    'Brand': 44,
-    'Battery capacity (mAh)': 4085,
-    'Screen size (inches)': 6.67,
-    'Touchscreen': 1,
-    'Processor': 8,
-    'RAM (MB)': 12000,
-    'Internal storage (GB)': 256.0,
-    'Rear camera': 48.0,
-    'Operating system': 0,
-    'Number of SIMs': 2,
-    '3G': 1,
-    '4G/ LTE': 1
+    new_phone = pd.DataFrame([{
+    'Brand': Brand,
+    'Battery capacity (mAh)': Battery_capacity_mAh,
+    'Screen size (inches)': Screen_size_inches,
+    'Touchscreen': Touchscreen,
+    'Processor': Processor,
+    'RAM (MB)': RAM_MB,
+    'Internal storage (GB)': Internal_storage_GB,
+    'Rear camera': Rear_camera,
+    'Operating system': Operating_system,
+    'Number of SIMs': Number_of_SIMs,
+    '3G': three_G,
+    '4G/ LTE': four_G_LTE
 }])
     
     # Predict price
     predicted_price = loaded_model.predict(new_phone)
+    
+    # Return the prediction
     return predicted_price[0]
-
-
-# Streamlit app
+# Main Streamlit app
 def main():
-    st.title("📱 Mobile Phone Price Prediction")
+    st.title("mobile phone Price Prediction")
 
-    # Input fields
+    # Input fields for all features
     Brand = st.text_input('Brand (numeric code, e.g., 44)')
     Battery_capacity_mAh = st.text_input('Battery capacity (mAh) (e.g., 4085)')
     Screen_size_inches = st.text_input('Screen size (inches) (e.g., 6.67)')
@@ -54,37 +60,31 @@ def main():
 
     if st.button('Predict phone Price'):
         try:
-            # Convert inputs
-            Brand = int(Brand)
-            Battery_capacity_mAh = int(Battery_capacity_mAh)
-            Screen_size_inches = float(Screen_size_inches)
-            Touchscreen = int(Touchscreen)
-            Processor = int(Processor)
-            RAM_MB = int(RAM_MB)
-            Internal_storage_GB = float(Internal_storage_GB)
-            Rear_camera = float(Rear_camera)
-            Operating_system = int(Operating_system)
-            Number_of_SIMs = int(Number_of_SIMs)
-            three_G = int(three_G)
-            four_G_LTE = int(four_G_LTE)
+        # Convert inputs to numeric types
+         Brand = int(Brand)
+         Battery_capacity_mAh = int(Battery_capacity_mAh)
+         Screen_size_inches = float(Screen_size_inches)
+         Touchscreen = int(Touchscreen)
+         Processor = int(Processor)
+         RAM_MB = int(RAM_MB)
+         Internal_storage_GB = float(Internal_storage_GB)
+         Rear_camera = float(Rear_camera)
+         Operating_system = int(Operating_system)
+         Number_of_SIMs = int(Number_of_SIMs)
+         three_G = int(three_G)
+         four_G_LTE = int(four_G_LTE)
 
-            # Predict
-            price = phone_price_prediction(
-                Brand, Battery_capacity_mAh, Screen_size_inches,
-                Touchscreen, Processor, RAM_MB, Internal_storage_GB,
-                Rear_camera, Operating_system, Number_of_SIMs,
-                three_G, four_G_LTE
-            )
+        # Call the prediction function (just fix indentation)
+         price = phone_price_prediction(
+            Brand, Battery_capacity_mAh, Screen_size_inches,
+            Touchscreen, Processor, RAM_MB, Internal_storage_GB,
+            Rear_camera, Operating_system, Number_of_SIMs,
+            three_G, four_G_LTE
+        )
 
-            st.success(f'The predicted phone price is: RWF {price:.2f}')
+         st.success(f'The predicted price for the switch is: RWF {price:.2f}')
         except ValueError:
-            st.error("Please enter valid numeric values for all inputs.")
-
-
+            
+         st.error("Please enter valid numeric values for all inputs.")
 if __name__ == '__main__':
-    main()
-
-
-
-
-
+    main()         
