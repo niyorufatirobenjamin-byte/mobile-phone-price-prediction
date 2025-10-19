@@ -63,12 +63,12 @@ def main():
         # Convert inputs to numeric types
          Brand = int(Brand)
          Battery_capacity_mAh = int(Battery_capacity_mAh)
-         Screen_size_inches = float(Screen_size_inches)
+         Screen_size_inches = int(Screen_size_inches)
          Touchscreen = int(Touchscreen)
          Processor = int(Processor)
          RAM_MB = int(RAM_MB)
-         Internal_storage_GB = float(Internal_storage_GB)
-         Rear_camera = float(Rear_camera)
+         Internal_storage_GB = int(Internal_storage_GB)
+         Rear_camera = int(Rear_camera)
          Operating_system = int(Operating_system)
          Number_of_SIMs = int(Number_of_SIMs)
          three_G = int(three_G)
@@ -87,4 +87,5 @@ def main():
             
          st.error("Please enter valid numeric values for all inputs.")
 if __name__ == '__main__':
+
     main()         
